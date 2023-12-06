@@ -1,0 +1,31 @@
+<h1 style="margin: 20px 0px 0px 40px;">Reporte de ventas</h1>
+
+<mat-card style="margin: 20px 40px 40px 40px;">
+  <mat-card-content>
+    <form [formGroup]="formularioFiltro" (ngSubmit)="buscarVentas()">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha Inicio</mat-label>
+        <input matInput autocomplete="off" formControlName="fechaInicio" [matDatepicker]="picker1">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha Fin</mat-label>
+        <input matInput autocomplete="off" formControlName="fechaFin" [matDatepicker]="picker2">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" [disabled]="formularioFiltro.invalid" type="submit" class="boton-buscar">
+        <mat-icon>search</mat-icon> Buscar
+      </button>
+    
+    </form>
+
+    <button mat-raised-button color="warn" [disabled]="listaVentasReporte.length < 1" (click)="exportarExcel()">
+      <mat-icon>feed</mat-icon> Exportar Excel
+    </button>
+  </mat-card-content>
+</mat-card>
