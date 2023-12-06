@@ -84,8 +84,8 @@ export class VentaComponent implements OnInit {
       idProducto: this.productoSeleccionado.idProducto,
       productoDescription: this.productoSeleccionado.nombre,
       cantidad: _cantidad,
-      precioTexto: String(_precio.toFixed(2)),
-      totalTexto: String(_total.toFixed(2))
+      precioText: String(_precio.toFixed(2)),
+      totalText: String(_total.toFixed(2))
     });
 
     this.datosDetalleVenta = new MatTableDataSource(this.listaProductosParaVenta);
@@ -97,7 +97,7 @@ export class VentaComponent implements OnInit {
   }
 
   eliminarProducto(detalle: DetalleVenta) {
-    this.totalPagar = this.totalPagar - parseFloat(detalle.totalTexto);
+    this.totalPagar = this.totalPagar - parseFloat(detalle.totalText);
     this.listaProductosParaVenta = this.listaProductosParaVenta.filter(p => p.idProducto != detalle.idProducto);
 
     this.datosDetalleVenta = new MatTableDataSource(this.listaProductosParaVenta);
@@ -106,10 +106,10 @@ export class VentaComponent implements OnInit {
   registrarVenta() {
     if (this.listaProductosParaVenta.length > 0) {
       this.bloquearBotonRegistrar = true;
-
+ 
       const request: Venta = {
         tipoPago: this.tipoPagoPorDefecto,
-        totalTexto: String(this.totalPagar.toFixed(2)),
+        totalText: String(this.totalPagar.toFixed(2)),
         DetalleVenta: this.listaProductosParaVenta
       };
 

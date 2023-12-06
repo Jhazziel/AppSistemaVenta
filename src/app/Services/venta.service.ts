@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ResponseApi } from '../Interfaces/response-api';
 import { Venta } from '../Interfaces/venta';
+import { Console } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,9 @@ export class VentaService {
   constructor(private http: HttpClient) { }
 
   Guardar(request: Venta): Observable<ResponseApi> {
+    
+    console.log(request);
+    
     return this.http.post<ResponseApi>(`${this.urlApi}Registrar`, request)
   }
 
