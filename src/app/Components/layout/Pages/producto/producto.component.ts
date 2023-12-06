@@ -19,7 +19,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
   columnasTable: string[] = ['nombre', 'categoria', 'stock', 'precio', 'estado', 'acciones'];
   dataInicio: Producto[] = [];
-  dataListaProductos = new MatTableDataSource(this.dataInicio);
+  dataListaProductos = new MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginacionTabla!: MatPaginator;
 
   constructor(
@@ -32,7 +32,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     this._productoService.Lista().subscribe({
       next: (data) => {
         if (data.status)
-          this.dataListaProductos = data.value;
+          this.dataListaProductos.data = data.value;
         else
           this._utilidadServicio.MostrarAlerta("No se encontraron productos", "Oops!")
       },
@@ -50,7 +50,10 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
   AplicarFiltroTabla(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataListaProductos.filter = filterValue.trim().toLowerCase();
+    if (filterValue !== "")
+      this.dataListaProductos.filter = filterValue.trim().toLowerCase();
+    else
+      this.dataListaProductos.filter = '';
   }
   
   NuevoProducto() {

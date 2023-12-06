@@ -19,7 +19,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
 
   columnasTable: string[] = ['nombreCompleto', 'correo', 'rolDescription', 'estado', 'acciones'];
   dataInicio: Usuario[] = [];
-  dataListaUsuario = new MatTableDataSource(this.dataInicio);
+  dataListaUsuario = new MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginacionTabla!: MatPaginator;
 
   constructor(
@@ -32,7 +32,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
     this._usuarioService.Lista().subscribe({
       next: (data) => {
         if (data.status)
-          this.dataListaUsuario = data.value;
+          this.dataListaUsuario.data = data.value;
         else
           this._utilidadServicio.MostrarAlerta("No se encontraron usuarios", "Oops!")
       },
@@ -50,7 +50,10 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
 
   AplicarFiltroTabla(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataListaUsuario.filter = filterValue.trim().toLowerCase();
+    if (filterValue !== "")
+      this.dataListaUsuario.filter = filterValue.trim().toLowerCase();
+    else
+      this.dataListaUsuario.filter = '';
   }
 
   NuevoUsuario() {
